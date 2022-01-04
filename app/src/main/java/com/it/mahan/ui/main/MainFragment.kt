@@ -46,7 +46,7 @@ class MainFragment : Fragment() {
         }
 
         binding.message.setOnClickListener() {
-            viewModel.fetchPokemonSpecies()
+            viewModel.displayRandomPokemon()
         }
 
         viewModel.spinner.observe(this) { value ->

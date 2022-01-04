@@ -6,6 +6,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import javax.inject.Inject
 import com.it.mahan.model.MyResult
+import com.it.mahan.model.Pokemon
 import com.it.mahan.util.ErrorUtils
 
 class PokemonRemoteDataSource @Inject constructor(private val retrofit: Retrofit) {
@@ -15,6 +16,15 @@ class PokemonRemoteDataSource @Inject constructor(private val retrofit: Retrofit
 
         return getResponse(
             request = { pokemonService.getPokemonSpecies() },
+            defaultErrorMessage = "Error fetching Pokemon species"
+        )
+    }
+
+    suspend fun getPokemonDetail(id: Int): MyResult<Pokemon> {
+        val pokemonService = retrofit.create(PokemonService::class.java)
+
+        return getResponse(
+            request = { pokemonService.getPokemonDetail(id) },
             defaultErrorMessage = "Error fetching Pokemon species"
         )
     }
