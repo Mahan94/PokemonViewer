@@ -7,8 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import coil.load
 import coil.transform.CircleCropTransformation
@@ -16,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.it.mahan.databinding.MainFragmentBinding
 import com.it.mahan.model.Pokemon
+import com.it.mahan.ui.moves.MovesListFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,6 +51,7 @@ class MainFragment : Fragment() {
         viewModel.spinner.observe(this) { value ->
             value.let { show ->
                 binding.spinner.visibility = if (show) View.VISIBLE else View.GONE
+                binding.btnNewPokemon.isEnabled = !show
             }
         }
 
@@ -89,48 +89,56 @@ class MainFragment : Fragment() {
 
         binding.tvName.text = pokemon.name
 
-        displayMoves(pokemon)
-        displayStats(pokemon)
+//        displayMoves(pokemon)
+//        displayStats(pokemon)
 
-        binding.pager.adapter = MoveStatAdapter(this)
+
+        val moves = ArrayList(pokemon.pokemonMoves.map { pm -> pm.move.name })
+        val fragmentList = arrayListOf<Fragment>(
+            MovesListFragment().apply {
+                arguments =
+                    Bundle().apply { putStringArrayList(MovesListFragment.ARG_MOVES, moves) }
+            },
+            MovesListFragment()
+        )
+
+        binding.pager.adapter = MoveStatAdapter(this, pokemon, fragmentList)
         TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
         }.attach()
     }
 
-    class MoveStatAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+    class MoveStatAdapter(
+        fragment: Fragment,
+        private val pokemon: Pokemon,
+        private val fragments: ArrayList<Fragment>
+    ) : FragmentStateAdapter(fragment) {
 
-        override fun getItemCount(): Int = 2
+        override fun getItemCount(): Int = fragments.size
 
         override fun createFragment(position: Int): Fragment {
-            // Return a NEW fragment instance in createFragment(int)
-            var fragment: Fragment
-            if (position == 0) {
-                fragment = MovesListFragment()
-            } else {
-                fragment = MovesListFragment()
-            }
-
-//            fragment.arguments = Bundle().apply {
-//                // Our object is just an integer :-P
-//                putInt(ARG_OBJECT, position + 1)
+//            // Return a NEW fragment instance in createFragment(int)
+//            var fragment: Fragment
+//            if (position == 0) {
+//                fragment = MovesListFragment()
+//
+//                fragment.arguments = Bundle().apply {
+////                    putInt(ARG_OBJECT, position + 1)
+//                    val moves = pokemon.pokemonMoves.map { pm -> pm.move.name }
+//                    putParcelable("pokemon", moves)
+//                }
+//            } else {
+//                fragment = MovesListFragment()
 //            }
-            return fragment
+//
+////            fragment.arguments = Bundle().apply {
+////                // Our object is just an integer :-P
+////                putInt(ARG_OBJECT, position + 1)
+////            }
+//            return fragment
+            return fragments[position]
         }
     }
 
-
-    private fun displayMoves(pokemon: Pokemon) {
-        val moves = pokemon.pokemonMoves.map { pm -> pm.move.name }
-        val layoutManager = LinearLayoutManager(context)
-
-        val dividerItemDecoration = DividerItemDecoration(
-            context,
-            layoutManager.orientation
-        )
-        binding.rvMoves.layoutManager = layoutManager
-        binding.rvMoves.addItemDecoration(dividerItemDecoration)
-        binding.rvMoves.adapter = PokemonMoveAdapter(context!!, moves)
-    }
 
     private fun displayStats(pokemon: Pokemon) {
 //        val stats = pokemon.pokemonStats

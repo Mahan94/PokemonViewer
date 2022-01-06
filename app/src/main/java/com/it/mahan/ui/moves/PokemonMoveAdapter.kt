@@ -1,7 +1,6 @@
-package com.it.mahan.ui.main
+package com.it.mahan.ui.moves
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.it.mahan.R
 
-class PokemonMoveAdapter(private val context: Context, private val items: List<String>) :
+class PokemonMoveAdapter(private val context: Context, private val items: ArrayList<String>) :
     RecyclerView.Adapter<PokemonMoveAdapter.MoveViewHolder>() {
 
     class MoveViewHolder(private val context: Context, itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -10,12 +10,13 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnNewPokemon"
-        android:background="@color/teal_200"
         android:layout_width="wrap_content"
-        android:padding="8dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_margin="10dp"
+        android:background="@color/design_default_color_primary"
+        android:padding="8dp"
         android:text="@string/display_another_random_pokemon"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -24,8 +25,8 @@
         android:id="@+id/ivFront"
         android:layout_width="150dp"
         android:layout_height="0dp"
-        android:padding="8dp"
         android:layout_marginTop="10dp"
+        android:padding="8dp"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toStartOf="@+id/ivBack"
         app:layout_constraintHorizontal_bias="0.5"
@@ -53,29 +54,25 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toTopOf="@id/btnNewPokemon"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivBack" />
+        app:layout_constraintTop_toBottomOf="@id/ivBack"
+        app:layout_constraintVertical_bias="0" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pager"
-        android:background="@android:color/transparent"
         app:tabBackground="@drawable/tab_pager_selector"
         app:tabGravity="center"
         app:tabIndicatorHeight="0dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMoves"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivBack" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvStats"
@@ -92,6 +89,8 @@
         android:layout_marginBottom="16dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
