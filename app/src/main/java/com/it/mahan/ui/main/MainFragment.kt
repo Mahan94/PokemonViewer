@@ -1,5 +1,6 @@
 package com.it.mahan.ui.main
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -39,9 +40,9 @@ class MainFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         setObservers()
 
+        viewModel.displayRandomPokemon()
     }
 
     private fun setObservers() {
@@ -89,7 +90,7 @@ class MainFragment : Fragment() {
             }
         }
 
-        binding.tvTitle.text = pokemon.name
+        binding.tvTitle.text = pokemon.name.uppercase()
 
 //        displayMoves(pokemon)
 //        displayStats(pokemon)

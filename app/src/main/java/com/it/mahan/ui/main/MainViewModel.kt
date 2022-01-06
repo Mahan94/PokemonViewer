@@ -1,12 +1,9 @@
 package com.it.mahan.ui.main
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.it.mahan.data.PokemonRepository
 import com.it.mahan.model.MyResult
 import com.it.mahan.model.Pokemon
-import com.it.mahan.model.PokemonSpecies
-import com.it.mahan.util.Logging.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -16,9 +13,6 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(private val pokemonRepository: PokemonRepository) :
     ViewModel() {
-
-    private val _pokemonSpecies = MutableLiveData<MyResult<PokemonSpecies>>()
-    val pokemonSpecies = _pokemonSpecies
 
     private val _displayedPokemon = MutableLiveData<Pokemon?>()
     val displayedPokemon: LiveData<Pokemon?>
@@ -38,9 +32,6 @@ class MainViewModel @Inject constructor(private val pokemonRepository: PokemonRe
 
     private var pokemonsTotalCount = 0
 
-//    init {
-//        fetchPokemonSpecies()
-//    }
 
     fun displayRandomPokemon() {
 
@@ -90,7 +81,6 @@ class MainViewModel @Inject constructor(private val pokemonRepository: PokemonRe
             when (it?.status) {
                 MyResult.Status.SUCCESS -> {
                     pokemonsTotalCount = it.data?.count ?: 0
-//                    _pokemonSpecies.value = it
                 }
                 MyResult.Status.ERROR -> {
                     throw Exception(it.message)
@@ -99,33 +89,6 @@ class MainViewModel @Inject constructor(private val pokemonRepository: PokemonRe
                 }
                 else -> {
                 }
-            }
-        }
-    }
-
-    private fun launchDataLoad(block: suspend (MyResult<PokemonSpecies>?) -> Unit): Unit {
-
-        viewModelScope.launch {
-            try {
-                _spinner.value = true
-
-                pokemonRepository.fetchPokemonSpecies().collect {
-                    when (it?.status) {
-                        MyResult.Status.LOADING -> {
-                        }
-                        MyResult.Status.SUCCESS -> {
-                            block(it)
-                        }
-                        MyResult.Status.ERROR -> {
-                            _snackBar.value = it.message
-                        }
-                        else -> {
-                        }
-                    }
-                }
-            } catch (error: Exception) {
-            } finally {
-                _spinner.value = false
             }
         }
     }
