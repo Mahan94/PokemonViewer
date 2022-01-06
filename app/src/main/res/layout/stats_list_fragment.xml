@@ -18,7 +18,7 @@ tools:context=".ui.stats.StatsListFragment">
     app:layout_constraintTop_toTopOf="parent" />
 
 <androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/rvMoves"
+    android:id="@+id/rvStats"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:scrollbarAlwaysDrawVerticalTrack="true"

@@ -1,8 +1,6 @@
 package com.it.mahan.ui.main
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -76,7 +74,6 @@ class MainFragment : Fragment() {
     private fun displayPokemon(pokemon: Pokemon) {
 
         pokemon.pokemonSprite.let {
-            Log.e("TAG", "displayPokemon: " + it.frontImage)
             binding.ivFront.load(it.frontImage) {
                 crossfade(true)
 //                placeholder(R.drawable.image)
