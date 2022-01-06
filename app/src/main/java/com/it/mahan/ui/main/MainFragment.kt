@@ -9,9 +9,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayoutMediator
 import com.it.mahan.databinding.MainFragmentBinding
 import com.it.mahan.model.Pokemon
 import dagger.hilt.android.AndroidEntryPoint
@@ -90,7 +92,32 @@ class MainFragment : Fragment() {
         displayMoves(pokemon)
         displayStats(pokemon)
 
+        binding.pager.adapter = MoveStatAdapter(this)
+        TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
+        }.attach()
     }
+
+    class MoveStatAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+
+        override fun getItemCount(): Int = 2
+
+        override fun createFragment(position: Int): Fragment {
+            // Return a NEW fragment instance in createFragment(int)
+            var fragment: Fragment
+            if (position == 0) {
+                fragment = MovesListFragment()
+            } else {
+                fragment = MovesListFragment()
+            }
+
+//            fragment.arguments = Bundle().apply {
+//                // Our object is just an integer :-P
+//                putInt(ARG_OBJECT, position + 1)
+//            }
+            return fragment
+        }
+    }
+
 
     private fun displayMoves(pokemon: Pokemon) {
         val moves = pokemon.pokemonMoves.map { pm -> pm.move.name }

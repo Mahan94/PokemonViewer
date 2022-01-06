@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Mahan/AndroidStudioProjects/PokemonViewer/app/src/main/res/drawable/default_pager_dot.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/Mahan/AndroidStudioProjects/PokemonViewer/app/src/main/res/drawable/selected_pager_dot.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/Mahan/AndroidStudioProjects/PokemonViewer/app/src/main/res/drawable/tab_pager_selector.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/Mahan/AndroidStudioProjects/PokemonViewer/app/src/main/res/layout/item_move.xml" value="0.18697916666666667" />
         <entry key="..\:/Users/Mahan/AndroidStudioProjects/PokemonViewer/app/src/main/res/layout/main_activity.xml" value="0.18697916666666667" />
         <entry key="..\:/Users/Mahan/AndroidStudioProjects/PokemonViewer/app/src/main/res/layout/main_fragment.xml" value="0.18697916666666667" />
