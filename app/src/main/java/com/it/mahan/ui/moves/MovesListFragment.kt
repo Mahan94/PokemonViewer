@@ -12,7 +12,6 @@ import com.it.mahan.databinding.MovesListFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.ArrayList
 
-
 @AndroidEntryPoint
 class MovesListFragment : Fragment() {
 

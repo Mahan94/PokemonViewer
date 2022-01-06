@@ -15,6 +15,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.it.mahan.databinding.MainFragmentBinding
 import com.it.mahan.model.Pokemon
 import com.it.mahan.ui.moves.MovesListFragment
+import com.it.mahan.ui.stats.StatsListFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,6 +41,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         setObservers()
+
     }
 
     private fun setObservers() {
@@ -87,70 +89,39 @@ class MainFragment : Fragment() {
             }
         }
 
-        binding.tvName.text = pokemon.name
+        binding.tvTitle.text = pokemon.name
 
 //        displayMoves(pokemon)
 //        displayStats(pokemon)
 
+        val moves = viewModel.getMovesList(pokemon)
 
-        val moves = ArrayList(pokemon.pokemonMoves.map { pm -> pm.move.name })
         val fragmentList = arrayListOf<Fragment>(
             MovesListFragment().apply {
                 arguments =
                     Bundle().apply { putStringArrayList(MovesListFragment.ARG_MOVES, moves) }
             },
-            MovesListFragment()
+            StatsListFragment().apply {
+                arguments =
+                    Bundle().apply { putParcelableArrayList(StatsListFragment.ARG_STATS, pokemon.pokemonStats) }
+            }
         )
 
-        binding.pager.adapter = MoveStatAdapter(this, pokemon, fragmentList)
+        binding.pager.adapter = MoveStatAdapter(this, fragmentList)
         TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
         }.attach()
     }
 
     class MoveStatAdapter(
         fragment: Fragment,
-        private val pokemon: Pokemon,
         private val fragments: ArrayList<Fragment>
     ) : FragmentStateAdapter(fragment) {
 
         override fun getItemCount(): Int = fragments.size
 
         override fun createFragment(position: Int): Fragment {
-//            // Return a NEW fragment instance in createFragment(int)
-//            var fragment: Fragment
-//            if (position == 0) {
-//                fragment = MovesListFragment()
-//
-//                fragment.arguments = Bundle().apply {
-////                    putInt(ARG_OBJECT, position + 1)
-//                    val moves = pokemon.pokemonMoves.map { pm -> pm.move.name }
-//                    putParcelable("pokemon", moves)
-//                }
-//            } else {
-//                fragment = MovesListFragment()
-//            }
-//
-////            fragment.arguments = Bundle().apply {
-////                // Our object is just an integer :-P
-////                putInt(ARG_OBJECT, position + 1)
-////            }
-//            return fragment
             return fragments[position]
         }
-    }
-
-
-    private fun displayStats(pokemon: Pokemon) {
-//        val stats = pokemon.pokemonStats
-//        val layoutManager = LinearLayoutManager(context)
-//
-//        val dividerItemDecoration = DividerItemDecoration(
-//            context,
-//            layoutManager.orientation
-//        )
-//        binding.rvMoves.layoutManager = layoutManager
-//        binding.rvMoves.addItemDecoration(dividerItemDecoration)
-//        binding.rvMoves.adapter = PokemonMoveAdapter(context!!, moves)
     }
 
 }

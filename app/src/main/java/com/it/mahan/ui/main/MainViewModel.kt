@@ -129,4 +129,10 @@ class MainViewModel @Inject constructor(private val pokemonRepository: PokemonRe
             }
         }
     }
+
+    fun getMovesList(pokemon: Pokemon): ArrayList<String> {
+        val moves = ArrayList(pokemon.pokemonMoves.map { pm -> pm.move.name })
+        return moves
+    }
+
 }

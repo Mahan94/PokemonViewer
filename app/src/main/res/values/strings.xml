@@ -2,5 +2,7 @@
     <string name="app_name">Pokemon Viewer</string>
     <string name="display_another_random_pokemon">Display another random Pokemon</string>
     <string name="no_moves_were_found_for_this_pokemon">No Moves Were Found For This Pokemon</string>
+    <string name="no_stats_were_found_for_this_pokemon">No Stats Were Found For This Pokemon</string>
     <string name="moves_list">Moves List</string>
+    <string name="stats_list">Stats List</string>
 </resources>

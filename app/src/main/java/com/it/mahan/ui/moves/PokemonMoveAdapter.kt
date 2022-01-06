@@ -7,21 +7,28 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.it.mahan.R
+import com.it.mahan.databinding.ListItemMoveBinding
 
 class PokemonMoveAdapter(private val context: Context, private val items: ArrayList<String>) :
     RecyclerView.Adapter<PokemonMoveAdapter.MoveViewHolder>() {
 
-    class MoveViewHolder(private val context: Context, itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class MoveViewHolder(
+        private val binding: ListItemMoveBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: String) {
-            itemView.findViewById<TextView>(R.id.tvMoveName).text = item
+            binding.apply {
+                tvMoveName.text = item
+            }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoveViewHolder {
-        val view =
-            LayoutInflater.from(context).inflate(R.layout.item_move, parent, false)
-        return MoveViewHolder(context, view)
+        return MoveViewHolder(
+            ListItemMoveBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            )
+        )
     }
 
     override fun getItemCount(): Int = items.size

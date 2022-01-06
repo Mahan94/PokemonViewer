@@ -10,5 +10,5 @@ data class Pokemon(
     @SerializedName("sprites")
     val pokemonSprite: PokemonSprite,
     @SerializedName("stats")
-    val pokemonStats: List<PokemonStat>
+    val pokemonStats: ArrayList<PokemonStat>
 )
