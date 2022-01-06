@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Pokemon Viewer</string>
+    <string name="display_another_random_pokemon">Display another random Pokemon</string>
 </resources>

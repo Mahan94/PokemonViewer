@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.it.mahan.data.PokemonRepository
 import com.it.mahan.model.MyResult
+import com.it.mahan.model.Pokemon
 import com.it.mahan.model.PokemonSpecies
 import com.it.mahan.util.Logging.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,6 +19,10 @@ class MainViewModel @Inject constructor(private val pokemonRepository: PokemonRe
 
     private val _pokemonSpecies = MutableLiveData<MyResult<PokemonSpecies>>()
     val pokemonSpecies = _pokemonSpecies
+
+    private val _displayedPokemon = MutableLiveData<Pokemon?>()
+    val displayedPokemon: LiveData<Pokemon?>
+        get() = _displayedPokemon
 
     private val _spinner = MutableLiveData<Boolean>(false)
     val spinner: LiveData<Boolean>
@@ -43,11 +48,7 @@ class MainViewModel @Inject constructor(private val pokemonRepository: PokemonRe
             try {
                 _spinner.value = true
 
-                if (pokemonsTotalCount == 0) {
-                    fetchPokemonSpecies()
-                }
-
-                val randomPokemonId = (1..pokemonsTotalCount).random()
+                val randomPokemonId = chooseRandomPokemonId()
                 fetchPokemonDetail(randomPokemonId)
 
             } catch (error: Exception) {
@@ -59,12 +60,19 @@ class MainViewModel @Inject constructor(private val pokemonRepository: PokemonRe
 
     }
 
+    private suspend fun chooseRandomPokemonId(): Int {
+        if (pokemonsTotalCount == 0) {
+            fetchPokemonSpecies()
+        }
+
+        return (1..pokemonsTotalCount).random()
+    }
+
     private suspend fun fetchPokemonDetail(id: Int) {
         pokemonRepository.fetchPokemonDetail(id).collect {
             when (it?.status) {
                 MyResult.Status.SUCCESS -> {
-                    Log.e(TAG, "fetchPokemonDetail: ${it.data.toString()}" )
-//                    _pokemonSpecies.value = it
+                    _displayedPokemon.value = it.data
                 }
                 MyResult.Status.ERROR -> {
                     throw Exception(it.message)
@@ -82,7 +90,7 @@ class MainViewModel @Inject constructor(private val pokemonRepository: PokemonRe
             when (it?.status) {
                 MyResult.Status.SUCCESS -> {
                     pokemonsTotalCount = it.data?.count ?: 0
-                    _pokemonSpecies.value = it
+//                    _pokemonSpecies.value = it
                 }
                 MyResult.Status.ERROR -> {
                     throw Exception(it.message)

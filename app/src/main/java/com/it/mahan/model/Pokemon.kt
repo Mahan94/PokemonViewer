@@ -8,7 +8,7 @@ data class Pokemon(
     @SerializedName("moves")
     val pokemonMoves: List<PokemonMove>,
     @SerializedName("sprites")
-    val pokemonSprites: List<PokemonSprite>,
+    val pokemonSprite: PokemonSprite,
     @SerializedName("stats")
     val pokemonStats: List<PokemonStat>
 )

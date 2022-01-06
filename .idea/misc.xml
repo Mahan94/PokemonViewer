@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Mahan/AndroidStudioProjects/PokemonViewer/app/src/main/res/layout/item_move.xml" value="0.18697916666666667" />
         <entry key="..\:/Users/Mahan/AndroidStudioProjects/PokemonViewer/app/src/main/res/layout/main_activity.xml" value="0.18697916666666667" />
+        <entry key="..\:/Users/Mahan/AndroidStudioProjects/PokemonViewer/app/src/main/res/layout/main_fragment.xml" value="0.18697916666666667" />
       </map>
     </option>
   </component>
